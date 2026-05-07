@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedHorizon: Long-context Medical Video Understanding in the Wild</title>
+  <meta name="description" content="MedHorizon is a long-context medical video benchmark for sparse evidence retrieval and multi-hop clinical reasoning over full procedures." />
+  <meta property="og:title" content="MedHorizon" />
+  <meta property="og:description" content="759 hours of full-procedure medical videos and 1,253 evidence-grounded QA pairs for in-the-wild long-context medical video understanding." />
+  <meta property="og:image" content="assets/figures/teaser_demo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero" id="top">
+    <nav class="nav shell">
+      <a class="brand" href="#top"><span class="brand-mark"></span>MedHorizon</a>
+      <div class="nav-links">
+        <a href="#benchmark">Benchmark</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#findings">Findings</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </nav>
+
+    <section class="shell hero-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span>NeurIPS 2026 submission</span><span>Dataset benchmark</span></div>
+        <h1>MedHorizon</h1>
+        <p class="subtitle">Towards long-context medical video understanding in the wild.</p>
+        <p class="lead">A full-procedure benchmark for testing whether multimodal models can retrieve sparse clinical evidence, bind it to anatomical and temporal context, and perform multi-hop reasoning over long medical videos.</p>
+        <div class="actions">
+          <a class="btn disabled" href="#" aria-disabled="true">arXiv Coming Soon</a>
+          <a class="btn" href="https://github.com/BodongDu/MedHorizon" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://huggingface.co/datasets/DBD123/MedHorizon" target="_blank" rel="noopener">Hugging Face</a>
+          <a class="btn ghost" href="#leaderboard">Leaderboard</a>
+        </div>
+      </div>
+      <aside class="hero-card reveal delay-1">
+        <div class="metric-ring">
+          <span>0.166%</span>
+          <small>mean evidence ratio</small>
+        </div>
+        <div class="mini-metrics">
+          <div><strong>759h</strong><span>full video</span></div>
+          <div><strong>340</strong><span>videos</span></div>
+          <div><strong>1,253</strong><span>QA pairs</span></div>
+          <div><strong>8</strong><span>datasets</span></div>
+        </div>
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="shell teaser reveal">
+      <img src="assets/figures/teaser_demo.jpg" alt="MedHorizon demo comparing fine-grained understanding and semantic reasoning tasks" />
+      <p class="caption">MedHorizon evaluates both fine-grained understanding and semantic reasoning. Models must operate on raw long videos rather than pre-cut answer clips.</p>
+    </section>
+
+    <section class="shell section" id="benchmark">
+      <div class="section-head reveal">
+        <p class="section-kicker">Benchmark Design</p>
+        <h2>Why medical long videos are different from general long videos</h2>
+        <p>Natural long-video QA often succeeds by locating visually distinctive moments. Medical procedures are different: the scene can stay anatomically homogeneous for hours, while decisive evidence is subtle, rare, and context dependent.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature reveal"><span>01</span><h3>Full-procedure context</h3><p>Videos are preserved as raw clinical procedures instead of trimmed to answer-bearing clips, forcing retrieval before reasoning.</p></article>
+        <article class="feature reveal delay-1"><span>02</span><h3>Extremely sparse evidence</h3><p>Only 1.7 useful frames appear per 1,000 frames on average, with a mean question-level evidence ratio of 0.166%.</p></article>
+        <article class="feature reveal delay-2"><span>03</span><h3>Evidence-grounded QA</h3><p>Questions are grounded in source annotations and refined through filtering, distractor strengthening, natural rewriting, and human-in-the-loop verification.</p></article>
+        <article class="feature reveal delay-3"><span>04</span><h3>Multi-hop clinical reasoning</h3><p>Semantic tasks require locating events, binding them to context, and aggregating findings across distant windows of the same procedure.</p></article>
+      </div>
+    </section>
+
+    <section class="wide-band">
+      <div class="shell figure-split">
+        <figure class="paper-figure reveal">
+          <img src="assets/figures/pipeline.jpg" alt="MedHorizon benchmark construction pipeline" />
+          <figcaption>Evidence-grounded construction pipeline.</figcaption>
+        </figure>
+        <div class="stats-panel reveal delay-1">
+          <h2>Dataset Snapshot</h2>
+          <dl>
+            <div><dt>Clinical scenes</dt><dd>diagnostic examination and surgery</dd></div>
+            <div><dt>Modalities</dt><dd>endoscopy, surgical video, ultrasound</dd></div>
+            <div><dt>Task groups</dt><dd>PR, SD, RL, BPQ, LLS, Site, Hist, Size, IR, WR, RSR, CPR, LD</dd></div>
+            <div><dt>Release split</dt><dd>test only, no train split</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="leaderboard">
+      <div class="section-head reveal">
+        <p class="section-kicker">Leaderboard</p>
+        <h2>Main results on MedHorizon</h2>
+        <p>Even the strongest evaluated model reaches only 41.1% accuracy, showing that full-procedure medical video understanding remains unsolved.</p>
+      </div>
+      <div class="leaderboard reveal">
+        <table>
+          <thead><tr><th>Rank</th><th>Model</th><th>Type</th><th>Frame Budget</th><th>Overall Acc.</th></tr></thead>
+          <tbody>
+            <tr class="best"><td>1</td><td>Gemini-3.1-Pro-Preview</td><td>Closed-source MLLM</td><td>32</td><td>41.1</td></tr>
+            <tr><td>2</td><td>GPT-5.4</td><td>Closed-source MLLM</td><td>32</td><td>32.6</td></tr>
+            <tr><td>3</td><td>GPT-5.4-mini</td><td>Closed-source MLLM</td><td>32</td><td>31.2</td></tr>
+            <tr><td>4</td><td>LLaVA-Video-72B</td><td>Open-source MLLM</td><td>64</td><td>29.4</td></tr>
+            <tr><td>5</td><td>Kimi-K2.5</td><td>Closed-source MLLM</td><td>64</td><td>29.3</td></tr>
+            <tr><td>6</td><td>WFS-SB</td><td>Retrieval-style video MLLM</td><td>128</td><td>28.1</td></tr>
+            <tr><td>7</td><td>Lingshu-32B</td><td>Medical MLLM</td><td>64</td><td>27.9</td></tr>
+            <tr class="sanity"><td>-</td><td>Text-only Qwen3-VL-8B</td><td>Prompt-only sanity check</td><td>0</td><td>27.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note reveal">The text-only row is a sanity check for textual shortcuts, not a visual model entry.</p>
+    </section>
+
+    <section class="shell section" id="findings">
+      <div class="section-head reveal">
+        <p class="section-kicker">Analysis</p>
+        <h2>Four findings from full-procedure evaluation</h2>
+      </div>
+      <div class="figure-grid">
+        <figure class="paper-figure reveal"><img src="assets/figures/overall_model_accuracy.png" alt="Overall model accuracy comparison" /><figcaption>Model performance remains low across model families.</figcaption></figure>
+        <figure class="paper-figure reveal delay-1"><img src="assets/figures/keyframe_ratio_bar.png" alt="Evidence sparsity distribution" /><figcaption>Useful frames occupy a tiny fraction of full procedures.</figcaption></figure>
+        <figure class="paper-figure reveal"><img src="assets/figures/e1_temporal_order.png" alt="Temporal order analysis" /><figcaption>Models use temporal order weakly and inconsistently.</figcaption></figure>
+        <figure class="paper-figure reveal delay-1"><img src="assets/figures/e2_sparse_tradeoff.png" alt="Sparse sampling tradeoff" /><figcaption>Sampling strategies shift errors across tasks rather than solving retrieval.</figcaption></figure>
+        <figure class="paper-figure reveal"><img src="assets/figures/e3_budget_tradeoff.png" alt="Frame budget tradeoff" /><figcaption>More frames do not reliably improve accuracy under redundant context.</figcaption></figure>
+        <figure class="paper-figure reveal delay-1"><img src="assets/figures/e6_attention_redundancy.png" alt="Attention redundancy analysis" /><figcaption>Attention remains diffuse over redundant visual context.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="shell section" id="download">
+      <div class="download-card reveal">
+        <div>
+          <p class="section-kicker">Release</p>
+          <h2>Evaluation-only dataset release</h2>
+          <p>The Hugging Face repository provides the benchmark JSONL, relative video paths, US-Study videos, and a test split metadata card. Code and evaluation scripts are linked through the GitHub button.</p>
+        </div>
+        <a class="btn" href="https://huggingface.co/datasets/DBD123/MedHorizon" target="_blank" rel="noopener">Open Dataset</a>
+      </div>
+    </section>
+
+    <section class="shell section citation" id="citation">
+      <div class="section-head reveal">
+        <p class="section-kicker">Citation</p>
+        <h2>Cite MedHorizon</h2>
+        <p>The citation will be updated when the arXiv preprint is available.</p>
+      </div>
+      <pre class="reveal"><code>@misc{medhorizon2026,
+  title  = {MedHorizon: Towards Long-context Medical Video Understanding in the Wild},
+  author = {Anonymous},
+  year   = {2026},
+  note   = {Dataset benchmark}
+}</code></pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <span>MedHorizon</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
